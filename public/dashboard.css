@@ -1,0 +1,39 @@
+body{
+    --primary: #6200ee;
+    --secondary: #e0e0e0;
+}
+.up{
+    text-transform: uppercase;
+}
+.padd{
+    padding-left: 1vw !important;
+}
+.active{
+    border-bottom: 2px solid var(--primary);
+    color: var(--primary);
+}
+
+.prime{
+    color: var(--primary) !important;
+}
+.bgprime{
+    background-color: var(--primary) !important;
+}
+.sec{
+    color: var(--secondary) !important;
+}
+.bgsec{
+    background-color: var(--secondary) !important;
+}
+li>a{
+    display: flex !important;
+}
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }

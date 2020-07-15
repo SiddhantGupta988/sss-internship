@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("./partials/head.ejs")  %> 
+<body onfocusout="hide()">
+    <%- include("./partials/nav.ejs")  %> 
+    <form class="formpadding login formone">
+        <div class="mdc-button">
+            <span class="mdc-button__label logintext">reset your SSC password</span>
+        </div>
+        <div class="ip mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+            <i class="color material-icons mdc-text-field__icon">mail</i>
+            <input id="email" typemode="email" type="email" class=" mdc-text-field__input" id="text-field-hero-input" required>
+            <div class="mdc-notched-outline">
+                <div class="mdc-notched-outline__leading"></div>
+                <div class="mdc-notched-outline__notch">
+                    <label for="text-field-hero-input" class="mdc-floating-label">E-mail</label>
+                </div>
+                <div class="mdc-notched-outline__trailing"></div>
+            </div>
+        </div>
+        <div class="ip mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+            <i class="color material-icons mdc-text-field__icon">lock</i>
+            <input id="password" type="password" minlength="8" maxlength="16" class=" mdc-text-field__input" id="text-field-hero-input" required>
+            <div class="mdc-notched-outline">
+                <div class="mdc-notched-outline__leading"></div>
+                <div class="mdc-notched-outline__notch">
+                    <label for="text-field-hero-input" class="mdc-floating-label">Password</label>
+                </div>
+                <div class="mdc-notched-outline__trailing"></div>
+            </div>
+        </div>
+        <div class="ip mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+            <i class="color material-icons mdc-text-field__icon">lock</i>
+            <input id="cpassword" type="password" minlength="8" maxlength="16" class=" mdc-text-field__input" id="text-field-hero-input" required>
+            <div class="mdc-notched-outline">
+                <div class="mdc-notched-outline__leading"></div>
+                <div class="mdc-notched-outline__notch">
+                    <label for="text-field-hero-input" class="mdc-floating-label">Confirm Password</label>
+                </div>
+                <div class="mdc-notched-outline__trailing"></div>
+            </div>
+        </div>
+        <div class="oneline">
+        <button type="submit" class="submit padd mdc-button mdc-button--raised">
+            <div class="mdc-button__ripple"></div>
+            <i class="loader material-icons mdc-button__icon" aria-hidden="true">query_builder</i>
+            <span class="mdc-button__label cap">Get reset Code</span>
+        </button>
+        <a href="/" class="padd mdc-button mdc-button--outlined">
+            <div class="mdc-button__ripple"></div>
+            <span class="mdc-button__label cap">Cancel</span>
+        </a>
+    </div>
+    </form>
+    <form class="formpadding otpform login">
+        <div class="mdc-button">
+            <span class="mdc-button__label logintext">reset your SSC password</span>
+        </div>
+        <div class="ip mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+            <i class="color material-icons mdc-text-field__icon">confirmation_number</i>
+            <input id="otp" typemode="number" type="number" minlength="6" maxlength="6" class=" mdc-text-field__input" id="text-field-hero-input" autocomplete="off" required>
+            <div class="mdc-notched-outline">
+                <div class="mdc-notched-outline__leading"></div>
+                <div class="mdc-notched-outline__notch">
+                    <label for="text-field-hero-input" class="mdc-floating-label">OTP</label>
+                </div>
+                <div class="mdc-notched-outline__trailing"></div>
+            </div>
+        </div>
+        <div class="oneline">
+        <button type="submit" class="update padd mdc-button mdc-button--raised">
+            <div class="mdc-button__ripple"></div>
+            <i class="loader material-icons mdc-button__icon" aria-hidden="true">query_builder</i>
+            <span class="mdc-button__label cap">Update Password</span>
+        </button>
+        <a href="/reset" class="padd mdc-button mdc-button--outlined">
+            <div class="mdc-button__ripple"></div>
+            <i class="loader material-icons mdc-button__icon" aria-hidden="true">cancel</i>
+            <span class="mdc-button__label cap">Cancel</span>
+        </a>
+      </div>
+    </form>
+
+<%- include("./partials/foot.ejs")  %> 
+
+</body>
+<script src="/index.js"></script>
+<script src="/reset.js"></script>
+</html>
