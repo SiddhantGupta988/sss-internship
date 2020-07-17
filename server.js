@@ -2,12 +2,9 @@ var express = require("express");
 var mysql = require("mysql");
 const nodemailer = require('nodemailer');
 var SHA256 = require("crypto-js/sha256");
-const {
-  connect
-} = require("http2");
-const {
-  connected
-} = require("process");
+var fileupload = require('fileupload').createFileUpload('/uploadDir').middleware;
+const {connect} = require("http2");
+const {connected} = require("process");
 let mailTransporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -35,11 +32,7 @@ app.set("view engine", "ejs");
 app.listen(3000);
 
 app.use(express.static("public"));
-app.use(
-  express.urlencoded({
-    extended: true,
-  })
-);
+app.use(express.urlencoded({extended: true,}));
 
 app.get("/", (req, res) => {
   res.render("index", {
@@ -105,7 +98,10 @@ app.get("/admin/dashboard", (req, res) => {
         result,
         fields
       ) {
-        if (err) { console.log(err);res.render("404");}
+        if (err) {
+          console.log(err);
+          res.render("404");
+        }
         if (result.length == 0) {
           res.render("404");
         } else {
@@ -164,22 +160,26 @@ app.post("/user/login", (req, res) => {
   }
 });
 app.get("/user/login/dashboard", (req, res) => {
-  console.log(req.query.auth)
-  console.log(req.query.email)
-  console.log(req.query.authtoken)
   if (req.query.auth == "true") {
     if (connected == true) {
-      con.query(`SELECT email,password FROM users where email="${req.query.email}" and password="${SHA256(req.query.authtoken)}"`, function (
+      con.query(`SELECT * FROM users where email="${req.query.email}" and password="${SHA256(req.query.authtoken)}"`, function (
         err,
         result,
         fields
       ) {
-        if (err) { console.log(err);res.render("404");}
+        if (err) {
+          console.log(err);
+          res.render("404");
+        }
         if (result.length == 0) {
           res.render("404");
         } else {
           if (`${SHA256(req.query.authtoken)}` == result[0].password) {
-            res.render("dashboard",{title:"SSC User dashboard"});
+            res.render("dashboard", {
+              title: "SSC User dashboard",
+              info: result
+            });
+
           } else {
             res.render("404");
           }
@@ -188,6 +188,52 @@ app.get("/user/login/dashboard", (req, res) => {
     }
   } else {
     res.render("404");
+  }
+});
+app.post("/update/profile", (req, res) => {
+  if (connected == true) {
+    con.query(`SELECT email,password FROM users where email="${req.body.email}" and password="${SHA256(req.body.authtoken)}"`, function (
+      err,
+      result,
+      fields
+    ) {
+      if (err) {
+        console.log(err);
+        res.send({
+          err: "some error",
+          updatestat: false
+        });
+      }
+      if (result.length == 0) {
+        res.send({
+          err: "some error ",
+          updatestat: false
+        });
+      } else {
+        con.query(`update users set name="${req.body.name}", phno="${req.body.tel}", gender="${req.body.gender}" where email="${req.body.email}" and password="${SHA256(req.body.authtoken)}"`, function (
+            err,
+            result,
+            fields
+          ) {
+            if (err) {
+              console.log(err);
+              res.send({
+                err: "some error",
+                updatestat: false
+              });
+            }
+            if (result.affectedRows) {
+              res.send({
+                err: "updated",
+                updatestat: true
+              })
+            }
+          }
+
+        )
+
+      }
+    })
   }
 });
 app.post("/signup/user", (req, res) => {
@@ -331,6 +377,12 @@ app.post("/reset/pwupdate", (req, res) => {
     })
   }
 });
+
+app.post('/upload',fileupload,(req,res)=>{
+  fileupload.put(req.body.file, function(error, file) {
+    res.send({sta:true,res:file})
+  })
+})
 
 app.use((req, res) => {
   res.render("404");

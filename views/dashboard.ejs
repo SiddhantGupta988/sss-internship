@@ -2,25 +2,86 @@
 <html lang="en">
 <%- include("./partials/dashhead.ejs")  %>
 
-<body>
+<body onclick="hide()" onfocusout="hide()">
     <%- include("./partials/dashnav.ejs")  %>
     <div class="main">
-        <div class="row">
-            <div class="col s12 m6">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="images/">
-                        <span class="card-title">Card Title</span>
-                        <a class="btn-floating halfway-fab waves-effect waves-light red"><i
-                                class="material-icons">add</i></a>
+        <img id="pp" src=<%= info[0].dp %> >
+        <form class="update">
+            <div class="mdc-button">
+                <span class="mdc-button__label logintext">Edit Profile</span>
+            </div>
+            <div class="ip mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+                <i class="prime material-icons mdc-text-field__icon">account_circle</i>
+                   <input id="name" type="text" class="bod mdc-text-field__input" id="text-field-hero-input" required>
+                <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                        <label for="text-field-hero-input" class="mdc-floating-label">Full Name</label>
                     </div>
-                    <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information. I am convenient
-                            because I require little markup to use effectively.</p>
-                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
                 </div>
             </div>
-        </div>
+            <div class="ip mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+                <i class="prime material-icons mdc-text-field__icon">phone</i>
+                <input id="phno" type="tel" minlength="10" maxlength="10" class="bod mdc-text-field__input"
+                    id="text-field-hero-input" required>
+                <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                        <label for="text-field-hero-input" class="mdc-floating-label">Phone no. </label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
+                </div>
+            </div>
+            <div class="ip input-field  mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+                <i class="prime material-icons mdc-text-field__icon">people</i>
+                <select class="prime gender bod selopt" required>
+                  <option class="prime" value="" disabled selected>Gender</option>
+                  <option class="prime" value="M">Male</option>
+                  <option class="prime" value="F">Female</option>
+                  <option class="prime" value="O">Other</option>
+                </select>
+                <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                        <label for="text-field-hero-input" class="mdc-floating-label"></label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
+                </div>
+              </div>
+
+            <div class="oneline">
+                <a onclick="update()" id="update" class="updatebtn padd mdc-button mdc-button--raised">
+                    <div class="mdc-button__ripple"></div>
+                    <i class="loader material-icons mdc-button__icon" aria-hidden="true">edit</i>
+                    <span class="mdc-button__label cap">Update</span>
+                </a>
+                <a class="padd mdc-button mdc-button--outlined">
+                    <div class="mdc-button__ripple"></div>
+                    <i class="material-icons mdc-button__icon" aria-hidden="true">cancel</i>
+                    <span class="mdc-button__label cap">cancel</span>
+                </a>
+            </div>
+        </form>
+        <form action="/upload" class="update" method="POST">
+            <div class="ip mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+                <i class="ichide file prime material-icons mdc-text-field__icon">image</i>
+                <input onchange="show()" name="Profile" id="dp" type="file" class="bod mdc-text-field__input" id="text-field-hero-input" accept="image/*"  required>
+                <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading">  <span class="filename"></span>
+                    </div>
+                    <div class="mdc-notched-outline__notch">
+                        <label for="text-field-hero-input" class="mdc-floating-label">Profile Picture</label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
+                </div>
+            </div>
+            <button type="submit" id="update" class="updatepp padd mdc-button mdc-button--raised">
+                <div class="mdc-button__ripple"></div>
+                <i class="loader material-icons mdc-button__icon" aria-hidden="true">edit</i>
+                <span class="mdc-button__label cap">Update</span>
+            </button>
+        </form>
     </div>
 
     <%- include("./partials/dashfoot.ejs") %>
