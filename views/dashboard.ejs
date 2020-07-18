@@ -5,14 +5,28 @@
 <body onclick="hide()" onfocusout="hide()">
     <%- include("./partials/dashnav.ejs")  %>
     <div class="main">
-        <img id="pp" src=<%= info[0].dp %> >
+        <div class="card">
+            <img id="pp" src="/uploads/<%= info[0].dp %>">
+            <h4><%= info[0].name %> </h4>
+            <p><b>Email:</b> <%= info[0].email %></p>
+            <% if(info[0].gender=="M"){ %>
+                <p><b>Gender:</b> Male </p>
+            <% }else if(info[0].gender=="F"){ %>
+                <p><b>Gender:</b> Female </p>
+            <% }else{ %>
+                <p><b>Gender:</b> Other </p>
+            <% } %>
+            <p><b>Phone no. :</b> <%= info[0].phno %> </p>
+            <p><b>DOB:</b> <%= info[0].dob %> </p>
+
+        </div>
         <form class="update">
             <div class="mdc-button">
                 <span class="mdc-button__label logintext">Edit Profile</span>
             </div>
             <div class="ip mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
                 <i class="prime material-icons mdc-text-field__icon">account_circle</i>
-                   <input id="name" type="text" class="bod mdc-text-field__input" id="text-field-hero-input" required>
+                <input id="name" type="text" class="bod mdc-text-field__input" id="text-field-hero-input" required>
                 <div class="mdc-notched-outline">
                     <div class="mdc-notched-outline__leading"></div>
                     <div class="mdc-notched-outline__notch">
@@ -36,10 +50,10 @@
             <div class="ip input-field  mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
                 <i class="prime material-icons mdc-text-field__icon">people</i>
                 <select class="prime gender bod selopt" required>
-                  <option class="prime" value="" disabled selected>Gender</option>
-                  <option class="prime" value="M">Male</option>
-                  <option class="prime" value="F">Female</option>
-                  <option class="prime" value="O">Other</option>
+                    <option class="prime" value="" disabled selected>Gender</option>
+                    <option class="prime" value="M">Male</option>
+                    <option class="prime" value="F">Female</option>
+                    <option class="prime" value="O">Other</option>
                 </select>
                 <div class="mdc-notched-outline">
                     <div class="mdc-notched-outline__leading"></div>
@@ -48,8 +62,19 @@
                     </div>
                     <div class="mdc-notched-outline__trailing"></div>
                 </div>
-              </div>
-
+            </div>
+            <div class="bm ip mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+                <i class="prime material-icons mdc-text-field__icon">calendar_today</i>
+                <input onchange="show()" id="dob" name="dob" type="date"  class="bod mdc-text-field__input" id="text-field-hero-input" required>
+                <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                        <label for="text-field-hero-input" class="mdc-floating-label">DOB</label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
+                </div>
+            </div>
+            <br><br><br>
             <div class="oneline">
                 <a onclick="update()" id="update" class="updatebtn padd mdc-button mdc-button--raised">
                     <div class="mdc-button__ripple"></div>
@@ -63,12 +88,14 @@
                 </a>
             </div>
         </form>
-        <form action="/upload" class="update" method="POST">
-            <div class="ip mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
-                <i class="ichide file prime material-icons mdc-text-field__icon">image</i>
-                <input onchange="show()" name="Profile" id="dp" type="file" class="bod mdc-text-field__input" id="text-field-hero-input" accept="image/*"  required>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="email" value="<%=info[0].email %>">
+            <input type="hidden" name="authtoken" value="<%=info[0].password %>">
+            <div class="ip bm mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+                <i class="ipfile file prime material-icons mdc-text-field__icon">image</i>
+                <input type="file" accept="image/*" name="photo" onchange="show()" id="dp" class="bod mdc-text-field__input" required>
                 <div class="mdc-notched-outline">
-                    <div class="mdc-notched-outline__leading">  <span class="filename"></span>
+                    <div class="mdc-notched-outline__leading"><span class="filename"></span>
                     </div>
                     <div class="mdc-notched-outline__notch">
                         <label for="text-field-hero-input" class="mdc-floating-label">Profile Picture</label>

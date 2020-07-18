@@ -10,11 +10,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var elems = document.querySelectorAll('select');
   var instances = M.FormSelect.init(elems);
   alert.style = "display: none;"
-  if (window.innerWidth >= 880) {
-    document.querySelector(".brand-logo").innerHTML = "staff selection commission";
-  } else {
-    document.querySelector(".brand-logo").innerHTML = "SSC";
-  }  
+    var elems = document.querySelectorAll('.datepicker');
+    var instances = M.Datepicker.init(elems);
 })
 
 list.forEach((item) => {
@@ -25,8 +22,13 @@ function hide() {
   alert.style = "display: none;"
 }
 
+if (window.innerWidth >= 880) {
+  document.querySelector(".brand-logo").innerHTML = "staff selection commission";
+} else {
+  document.querySelector(".brand-logo").innerHTML = "SSC";
+}  
+
 window.addEventListener("resize", () => {
-  ci
   if (window.innerWidth >= 880) {
     document.querySelector(".brand-logo").innerHTML = "staff selection commission";
   } else {
@@ -56,10 +58,11 @@ function update() {
   var name = document.querySelector("#name").value;
   var tel = document.querySelector("#phno").value;
   var gender = document.querySelector(".gender").value;
+  var dob = document.querySelector("#dob").value;
     url = `/update/profile/`;
     fetch(url, {
         method: "POST",
-        body: new URLSearchParams(`email=${mail}&authtoken=${authtoken}&name=${name}&tel=${tel}&gender=${gender}`),
+        body: new URLSearchParams(`email=${mail}&authtoken=${authtoken}&name=${name}&tel=${tel}&gender=${gender}&dob=${dob}`),
       })
       .then((res) => res.json())
       .then((data) => {
@@ -76,3 +79,21 @@ function update() {
         alert.style = "display: inherit;";
       });
 }
+
+
+function show(){
+    document.querySelector('.ipfile').innerHTML="<img class=\"p\" src=\"\">";
+    const file = document.querySelector('input[type=file]').files[0];
+    document.querySelector(".filename").innerHTML=file.name;
+    const p=document.querySelector(".p");
+    const reader = new FileReader();
+  
+    reader.addEventListener("load", function () {
+      // convert image file to base64 string
+      p.src = reader.result;
+    }, false);
+  
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  }

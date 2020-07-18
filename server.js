@@ -2,9 +2,13 @@ var express = require("express");
 var mysql = require("mysql");
 const nodemailer = require('nodemailer');
 var SHA256 = require("crypto-js/sha256");
-var fileupload = require('fileupload').createFileUpload('/uploadDir').middleware;
-const {connect} = require("http2");
-const {connected} = require("process");
+
+const {
+  connect
+} = require("http2");
+const {
+  connected
+} = require("process");
 let mailTransporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -32,7 +36,9 @@ app.set("view engine", "ejs");
 app.listen(3000);
 
 app.use(express.static("public"));
-app.use(express.urlencoded({extended: true,}));
+app.use(express.urlencoded({
+  extended: true,
+}));
 
 app.get("/", (req, res) => {
   res.render("index", {
@@ -162,7 +168,7 @@ app.post("/user/login", (req, res) => {
 app.get("/user/login/dashboard", (req, res) => {
   if (req.query.auth == "true") {
     if (connected == true) {
-      con.query(`SELECT * FROM users where email="${req.query.email}" and password="${SHA256(req.query.authtoken)}"`, function (
+      con.query(`SELECT * FROM users where email="${req.query.email}"`, function (
         err,
         result,
         fields
@@ -174,7 +180,7 @@ app.get("/user/login/dashboard", (req, res) => {
         if (result.length == 0) {
           res.render("404");
         } else {
-          if (`${SHA256(req.query.authtoken)}` == result[0].password) {
+          if (`${SHA256(req.query.authtoken)}` == result[0].password || req.query.authtoken == result[0].password) {
             res.render("dashboard", {
               title: "SSC User dashboard",
               info: result
@@ -192,7 +198,7 @@ app.get("/user/login/dashboard", (req, res) => {
 });
 app.post("/update/profile", (req, res) => {
   if (connected == true) {
-    con.query(`SELECT email,password FROM users where email="${req.body.email}" and password="${SHA256(req.body.authtoken)}"`, function (
+    con.query(`SELECT email,password FROM users where email="${req.body.email}"`, function (
       err,
       result,
       fields
@@ -200,17 +206,17 @@ app.post("/update/profile", (req, res) => {
       if (err) {
         console.log(err);
         res.send({
-          err: "some error",
+          err: "some error 😂",
           updatestat: false
         });
       }
       if (result.length == 0) {
         res.send({
-          err: "some error ",
+          err: "some error 😂😂",
           updatestat: false
         });
       } else {
-        con.query(`update users set name="${req.body.name}", phno="${req.body.tel}", gender="${req.body.gender}" where email="${req.body.email}" and password="${SHA256(req.body.authtoken)}"`, function (
+        con.query(`update users set name="${req.body.name}", phno="${req.body.tel}", gender="${req.body.gender}",dob="${req.body.dob}" where email="${req.body.email}"`, function (
             err,
             result,
             fields
@@ -218,7 +224,7 @@ app.post("/update/profile", (req, res) => {
             if (err) {
               console.log(err);
               res.send({
-                err: "some error",
+                err: "some error 😂😂😂😂",
                 updatestat: false
               });
             }
@@ -378,11 +384,48 @@ app.post("/reset/pwupdate", (req, res) => {
   }
 });
 
-app.post('/upload',fileupload,(req,res)=>{
-  fileupload.put(req.body.file, function(error, file) {
-    res.send({sta:true,res:file})
-  })
+const multer = require('multer');
+var path = require('path')
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './public/uploads')
+  },
+  filename: function (req, file, cb) {
+    /*Appending extension with original name*/
+    console.log(file.originalname)
+    cb(null, file.originalname.split(".")[0] + Date.now() + path.extname(file.originalname))
+  }
+
 })
+
+var upload = multer({
+  storage: storage
+});
+app.post('/upload', upload.single('photo'), (req, res) => {
+  console.log(req.body.email)
+  console.log(req.body.authtoken)
+  console.log(req.file.filename)
+  if (req.file) {
+    if (connected == true) {
+      con.query(`update users set dp="${req.file.filename}" where email="${req.body.email}" and password="${req.body.authtoken}"`, function (err, res1, fields) {
+        if (err) {
+          console.log(err);
+          res.send("unable to upload picture try again")
+        }else{
+          if(res1.affectedRows==1){
+          con.query(`select * from users where email="${req.body.email}" and password="${req.body.authtoken}"`,function(err,res1){
+            if (err){ console.log(err); res.redirect("/")}
+            else{
+              res.redirect(`/user/login/dashboard?auth=true&email=${req.body.email}&authtoken=${req.body.authtoken}`)
+            }
+          })
+          }
+        }
+      })
+    }
+  } else res.send("Error in uploading picture try after some time");
+});
 
 app.use((req, res) => {
   res.render("404");

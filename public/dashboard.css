@@ -3,6 +3,11 @@ body {
     --secondary: #e0e0e0;
 }
 
+#pp{
+    width: 30vh;
+    height: 30vh;
+    border-radius: 50%;
+}
 .up {
     text-transform: uppercase;
 }
@@ -41,16 +46,37 @@ body {
     min-height: 100vh;
     flex-direction: column;
 }
-
+h4{
+    text-transform: uppercase;
+}
 main {
     flex: 1 0 auto;
 }
-
+.p{
+    width: 5vw;
+    height: 4.5vw;
+}
 .circle {
     border-radius: 50%;
 }
-
+.bm{
+    margin-bottom: 2vw;
+}
+.fn{
+    padding: 2vw;
+    width: 100%;
+}
 @media screen and (max-width: 679px) {
+    .card{
+        border-radius: 10px;
+        padding-top: 4vh;
+        display: grid;
+        justify-content: center;
+        width: 90vw !important;
+        margin-left: 5vw !important;
+        margin-right: 5vw !important;
+
+    }
     .oneline {
         display: contents;
     }
