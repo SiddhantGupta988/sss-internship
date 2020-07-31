@@ -3,11 +3,12 @@ body {
     --secondary: #e0e0e0;
 }
 
-#pp{
+#pp {
     width: 30vh;
     height: 30vh;
     border-radius: 50%;
 }
+
 .up {
     text-transform: uppercase;
 }
@@ -37,7 +38,7 @@ body {
     background-color: var(--secondary) !important;
 }
 
-li>a {
+li > a {
     display: flex !important;
 }
 
@@ -46,62 +47,97 @@ body {
     min-height: 100vh;
     flex-direction: column;
 }
-h4{
+
+h4 {
     text-transform: uppercase;
+    font-size: 16px;
 }
+
 main {
     flex: 1 0 auto;
 }
-.p{
+
+.p {
     width: 5vw;
     height: 4.5vw;
 }
+
 .circle {
     border-radius: 50%;
 }
-.bm{
+
+.bm {
     margin-bottom: 2vw;
 }
-.fn{
+
+.fn {
     padding: 2vw;
     width: 100%;
 }
+
 @media screen and (max-width: 679px) {
-    .card{
+    .main1{
+        display: grid;
+        grid-template-rows: auto auto;
+        grid-template-columns: auto;
+    }
+    .card2{
+        grid-row: 1;
+    }
+    .card1{
+        grid-row: 2;
+    }
+    .main2{
+        display: grid !important;
+        grid-template-columns: auto;
+        grid-template-rows: auto auto;
+    }
+    .update{
+        grid-row: 1 !important;
+    }
+    .ppu{
+        grid-row: 2 !important;
+    }
+    .current-time{
+        width: 60vw !important;
+    }
+    .card {
         border-radius: 10px;
         padding-top: 4vh;
         display: grid;
-        justify-content: center;
+        justify-content: center !important;
+        text-align: start ;
         width: 90vw !important;
         margin-left: 5vw !important;
         margin-right: 5vw !important;
-
     }
+
     .oneline {
-        display: contents;
+        display: grid;
+        justify-content: center;
     }
 
     .ip {
         width: 80vw !important;
     }
 
-    .select-wrapper,.filename {
+    .select-wrapper, .filename {
         width: 75vw !important;
     }
 }
-.filename{
-    padding: 1.4vw;
-    padding-left: 5.5vw;
+
+.filename {
+    padding: 1.4vw 1.4vw 1.4vw 5.5vw;
     display: inline-block;
     font-weight: 600;
 }
-.alert{
+
+.alert {
     margin-top: 0px;
     position: sticky;
     top: 0px;
     background-color: red;
     height: 56px;
-    padding: 2vw;
     text-align: center;
     color: white;
     width: 80vw;
@@ -111,24 +147,82 @@ main {
     z-index: 5;
     display: grid;
     justify-content: center;
-    padding-top: 10px;
+    padding: 10px 2vw 2vw;
 }
+
 input[type="file"] {
     opacity: 0;
 }
-
+.pt{
+    padding-top: 1vw;
+    vertical-align: bottom;
+}
+.center{
+    display: grid;
+    justify-content: center;
+}
+.current-time{
+    background-color: var(--primary);
+    border-radius:  10px;
+    height: 14vh;
+    width: 20vw;
+    color: #fff;
+    display: grid;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 20px;
+    padding: 1vw;
+}
+.current-time>p{
+    margin: 0px;
+}
 @media screen and (min-width: 679px) {
+    .main2{
+        display: grid !important;
+        grid-template-columns: auto;
+        grid-template-rows: auto;
+    }
+    .main1{
+        width: 90vw !important;
+        display: grid;
+        grid-template-rows: auto;
+        grid-template-columns: 30vw 60vw ;
+        grid-column-gap: 5vw !important;
+    }
+    .card1{
+        grid-column: 1;
+        margin-left: 2.5vw !important;
+        margin-right: 2.5vw !important;
+
+    }
+    .card2 {
+        padding-top: 10px !important;
+        grid-column: 2;
+        width: 60vw !important;
+        margin-left: 2.5vw !important;
+        margin-right: 2.5vw !important;
+    }
+    .card {
+        height: 85vh;
+        width: 30vw;
+        border-radius: 10px;
+        padding-top: 4vh;
+        display: grid;
+        justify-content: center;
+        text-align: match-parent;
+    }
     .oneline {
         display: flex;
+        justify-content: center;
     }
 
-    .oneline>button,
-    .oneline>a {
+    .oneline > button,
+    .oneline > a {
         width: 30vw;
 
     }
 
-    .select-wrapper,.filename {
+    .select-wrapper, .filename {
         width: 55vw !important;
     }
 
@@ -141,8 +235,7 @@ input[type="file"] {
 .ip {
     width: 60vw !important;
 }
-
-form>div {
+form > div {
     margin-top: 1.5vw;
     width: 100% !important;
 }
@@ -166,12 +259,17 @@ form {
     height: auto !important;
     margin-top: 1vw !important;
 }
-
-form>.gen {
+.footer{
+    position: fixed;
+    bottom: 0px;
+    background-color: var(--secondary);
+    width: 100%;
+}
+form > .gen {
     margin-top: 0px;
 }
 
-.gen>p {
+.gen > p {
     padding-left: 1vw;
 
 }
@@ -187,7 +285,8 @@ form>.gen {
 .select {
     width: 100%;
 }
-#preimg{
+
+#preimg {
     height: 5vh;
     width: 5vw;
 }

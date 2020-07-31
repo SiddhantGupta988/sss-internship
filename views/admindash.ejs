@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include("./partials/dashhead.ejs") %>
+    <link rel="stylesheet" href="/admindash.css">
+</head>
+
+<body onclick="hide()" onfocusout="hide()">
+
+    <% function localtime(timeString) {
+    var hourEnd = timeString.indexOf(":");
+    var H = +timeString.substr(0, hourEnd);
+    var h = H % 12 || 12;
+    var ampm = (H < 12 || H === 24) ? "AM" : "PM";
+    var timeString = h + timeString.substr(hourEnd, 3) + " "+ampm;
+    return timeString;
+}%>
+    <%- include("./partials/dashnav.ejs") %>
+    <div class="show"><b>Present Timings:</b><%=info[0].startdate%> ,<%=localtime(info[0].starttime)%> to
+        <%=info[0].enddate%> ,<%=localtime(info[0].endtime)%></div>
+    <br><Br>
+    <div class="line">
+        <div class="oneline1">
+            <a href="" onclick="this.href=link()" class="qs padd mdc-button mdc-button--raised">
+                <div class="mdc-button__ripple"></div>
+                <i class="loader material-icons mdc-button__icon" aria-hidden="true">edit</i>
+                <span class="mdc-button__label cap">Update Questions</span>
+            </a>
+            <a href="/previewqs?email=<%=info[0].email%>&authtoken=<%=info[0].password%>  "
+                class="qs padd mdc-button mdc-button--raised">
+                <div class="mdc-button__ripple"></div>
+                <i class="loader material-icons mdc-button__icon" aria-hidden="true">edit</i>
+                <span class="mdc-button__label cap">Review Questions</span>
+            </a>
+            <button onclick="show()" class="qs padd mdc-button mdc-button--raised">
+                <div class="mdc-button__ripple"></div>
+                <i class="loader material-icons mdc-button__icon" aria-hidden="true">edit</i>
+                <span class="mdc-button__label cap">Update timings</span>
+            </button></div>
+    </div>
+    <div class="divider"></div>
+    <table class="striped centered">
+        <thead>
+            <tr class="lead">
+                <th colspan="3" style="border: none;"> Leaderboard</th>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        
+        <% scores.forEach(score => { if(score.score !=0){%>
+            <tbody>
+                <tr>
+                    <td><%=score.name %></td>
+                    <td><%=score.email %></td>
+                    <td><%=score.score %></td>
+                </tr>
+            </tbody>
+        <% }}); %>
+    </table>
+        </div>
+        <div class="main">
+            <form class="form1" action="/adminupdate" method="POST">
+                <input name="email" type="hidden" value="<%=info[0].email %>">
+                <input name="authtoken" type="hidden" value="<%=info[0].password %>">
+                <div class="mdc-button">
+                    <span class="mdc-button__label logintext">Update timings of Exam</span>
+                </div>
+                <div class="ip mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+                    <input name="startdate" id="startdate" type="date" class=" mdc-text-field__input"
+                        id="text-field-hero-input" required>
+                    <div class="mdc-notched-outline">
+                        <div class="mdc-notched-outline__leading"></div>
+                        <div class="mdc-notched-outline__notch">
+                            <label for="text-field-hero-input" class="mdc-floating-label">Start Date</label>
+                        </div>
+                        <div class="mdc-notched-outline__trailing"></div>
+                    </div>
+                </div>
+                <div class="ip mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+                    <input name="starttime" id="starttime" type="time" class=" mdc-text-field__input"
+                        id="text-field-hero-input" required>
+                    <div class="mdc-notched-outline">
+                        <div class="mdc-notched-outline__leading"></div>
+                        <div class="mdc-notched-outline__notch">
+                            <label for="text-field-hero-input" class="mdc-floating-label"> Start Time</label>
+                        </div>
+                        <div class="mdc-notched-outline__trailing"></div>
+                    </div>
+                </div>
+                <div class="ip mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+                    <input onchange="compdate()" name="enddate" id="enddate" type="date" class=" mdc-text-field__input"
+                        id="text-field-hero-input" required>
+                    <div class="mdc-notched-outline">
+                        <div class="mdc-notched-outline__leading"></div>
+                        <div class="mdc-notched-outline__notch">
+                            <label for="text-field-hero-input" class="mdc-floating-label">End Date</label>
+                        </div>
+                        <div class="mdc-notched-outline__trailing"></div>
+                    </div>
+                </div>
+                <div class="ip mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+                    <input name="endtime" id="endtime" type="time" class=" mdc-text-field__input"
+                        id="text-field-hero-input" required>
+                    <div class="mdc-notched-outline">
+                        <div class="mdc-notched-outline__leading"></div>
+                        <div class="mdc-notched-outline__notch">
+                            <label for="text-field-hero-input" class="mdc-floating-label">End Time</label>
+                        </div>
+                        <div class="mdc-notched-outline__trailing"></div>
+                    </div>
+                </div>
+                <div class="ip mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+                    <input name="noh" id="noh" type="number" class=" mdc-text-field__input" id="text-field-hero-input"
+                        required>
+                    <div class="mdc-notched-outline">
+                        <div class="mdc-notched-outline__leading"></div>
+                        <div class="mdc-notched-outline__notch">
+                            <label for="text-field-hero-input" class="mdc-floating-label">Number of Minutes to take
+                                exam</label>
+                        </div>
+                        <div class="mdc-notched-outline__trailing"></div>
+                    </div>
+                </div>
+                <div class="oneline">
+                    <button type="submit" class="submit padd mdc-button mdc-button--raised">
+                        <div class="mdc-button__ripple"></div>
+                        <i class="loader material-icons mdc-button__icon" aria-hidden="true">admin_panel_settings</i>
+                        <span class="mdc-button__label cap">Update Timings</span>
+                    </button>
+                </div>
+
+            </form>
+        </div>
+        <br><br>
+</body>
+<script src="/admindash.js"></script>
+
+</html>

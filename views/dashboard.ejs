@@ -1,32 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include("./partials/dashhead.ejs")  %>
+
+<head>
+    <%- include("./partials/dashhead.ejs") %>
+    <link rel="stylesheet" href="/dashboard.css">
+</head>
 
 <body onclick="hide()" onfocusout="hide()">
-    <%- include("./partials/dashnav.ejs")  %>
-    <div class="main">
-        <div class="card">
+    <%- include("./partials/dashnav.ejs") %>
+    <% function finddisable(sd, st, ed, et,te) {
+        console.log(te,typeof(te))
+    if(te==1){
+        return "disabled";
+    }else{
+    const start = new Date(sd + "T" + st);
+    const end = new Date(ed + "T" + et);
+    const presentdate = new Date();
+    if (start < presentdate & presentdate < end) return " "
+    else return "disabled";
+    }
+} %>
+    <% function localtime(timeString) {
+    var hourEnd = timeString.indexOf(":");
+    var H = +timeString.substr(0, hourEnd);
+    var h = H % 12 || 12;
+    var ampm = (H < 12 || H === 24) ? "AM" : "PM";
+    var timeString = h + timeString.substr(hourEnd, 3) + " " + ampm;
+    return timeString;
+} %>
+    <div class="main main1">
+        <div class="mdc-elevation--z5 prime card card1">
             <img id="pp" src="/uploads/<%= info[0].dp %>">
-            <h4><%= info[0].name %> </h4>
+
+            <h4><b><%= info[0].name %> </b></h4>
+
             <p><b>Email:</b> <%= info[0].email %></p>
-            <% if(info[0].gender=="M"){ %>
-                <p><b>Gender:</b> Male </p>
-            <% }else if(info[0].gender=="F"){ %>
-                <p><b>Gender:</b> Female </p>
+
+            <% if(info[0].gender == "M"){ %>
+            <p><b>Gender:</b> Male </p>
+            <% }else if(info[0].gender == "F"){ %>
+            <p><b>Gender:</b> Female </p>
             <% }else{ %>
-                <p><b>Gender:</b> Other </p>
+            <p><b>Gender:</b> Other </p>
             <% } %>
+            <p><b>Date of Birth:</b> <%= info[0].dob %> </p>
+
+
             <p><b>Phone no. :</b> <%= info[0].phno %> </p>
-            <p><b>DOB:</b> <%= info[0].dob %> </p>
+
 
         </div>
+        <div class="mdc-elevation--z5 info card card2">
+            <div class="center">
+                <div class="current-time">
+                    <p class="date"></p>
+                    <p class="time"></p>
+                </div>
+            </div>
+            <div class="info">
+                <ol>
+                    <li>You can take this exam between <%= examinfo[0].startdate %>
+                        ,<%= localtime(examinfo[0].starttime) %>
+                        to <%= examinfo[0].enddate %> ,<%= localtime(examinfo[0].endtime) %>.
+                    </li>
+                    <li></li>
+                </ol>
+            </div>
+            <button onclick="window.open('/exam?email=<%=info[0].email%>&authtoken=<%=info[0].password%>')"
+                class="padd mdc-button mdc-button--raised"
+                <%= finddisable(examinfo[0].startdate, examinfo[0].starttime, examinfo[0].enddate, examinfo[0].endtime,info[0].takeexam) %>>
+                <div class="mdc-button__ripple"></div>
+                <i class="loader material-icons mdc-button__icon" aria-hidden="true">rule</i>
+                <span class="mdc-button__label cap">Take Exam</span>
+            </button>
+
+        </div>
+    </div>
+    <div class="main main2">
         <form class="update">
             <div class="mdc-button">
                 <span class="mdc-button__label logintext">Edit Profile</span>
             </div>
             <div class="ip mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
                 <i class="prime material-icons mdc-text-field__icon">account_circle</i>
-                <input id="name" type="text" class="bod mdc-text-field__input" id="text-field-hero-input" required>
+                <input id="name" type="text" class="bod mdc-text-field__input" id="text-field-hero-input"
+                    value="<%=info[0].name%>" required>
                 <div class="mdc-notched-outline">
                     <div class="mdc-notched-outline__leading"></div>
                     <div class="mdc-notched-outline__notch">
@@ -38,7 +96,7 @@
             <div class="ip mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
                 <i class="prime material-icons mdc-text-field__icon">phone</i>
                 <input id="phno" type="tel" minlength="10" maxlength="10" class="bod mdc-text-field__input"
-                    id="text-field-hero-input" required>
+                    value="<%= info[0].phno %>" id="text-field-hero-input" value="<%=info[0].phno%>" required>
                 <div class="mdc-notched-outline">
                     <div class="mdc-notched-outline__leading"></div>
                     <div class="mdc-notched-outline__notch">
@@ -50,10 +108,12 @@
             <div class="ip input-field  mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
                 <i class="prime material-icons mdc-text-field__icon">people</i>
                 <select class="prime gender bod selopt" required>
-                    <option class="prime" value="" disabled selected>Gender</option>
-                    <option class="prime" value="M">Male</option>
-                    <option class="prime" value="F">Female</option>
-                    <option class="prime" value="O">Other</option>
+                    <option class="prime" value="" disabled <%=()=>{if(info[0].gender=="")return "selected"}%>>Gender
+                    </option>
+                    <option class="prime" value="M" <%=()=>{if(info[0].gender=="M")return "selected"}%>>Male</option>
+                    <option class="prime" value="F" <%=()=>{if(info[0].gender=="F")return "selected"}%>>Female</option>
+                    <option class="prime" value="O" <%=()=>{if(info[0].gender=="O")return "selected"}%>>Other</option>
+
                 </select>
                 <div class="mdc-notched-outline">
                     <div class="mdc-notched-outline__leading"></div>
@@ -65,7 +125,8 @@
             </div>
             <div class="bm ip mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
                 <i class="prime material-icons mdc-text-field__icon">calendar_today</i>
-                <input onchange="show()" id="dob" name="dob" type="date"  class="bod mdc-text-field__input" id="text-field-hero-input" required>
+                <input onchange="show()" id="dob" name="dob" type="date" class="bod mdc-text-field__input"
+                    id="text-field-hero-input" value="<%=info[0].dob%>" required>
                 <div class="mdc-notched-outline">
                     <div class="mdc-notched-outline__leading"></div>
                     <div class="mdc-notched-outline__notch">
@@ -76,24 +137,23 @@
             </div>
             <br><br><br>
             <div class="oneline">
-                <a onclick="update()" id="update" class="updatebtn padd mdc-button mdc-button--raised">
+                <button id="update" class="updatebtn padd mdc-button mdc-button--raised">
                     <div class="mdc-button__ripple"></div>
                     <i class="loader material-icons mdc-button__icon" aria-hidden="true">edit</i>
                     <span class="mdc-button__label cap">Update</span>
-                </a>
-                <a class="padd mdc-button mdc-button--outlined">
-                    <div class="mdc-button__ripple"></div>
-                    <i class="material-icons mdc-button__icon" aria-hidden="true">cancel</i>
-                    <span class="mdc-button__label cap">cancel</span>
-                </a>
+                </button>
             </div>
         </form>
-        <form action="/upload" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="email" value="<%=info[0].email %>">
-            <input type="hidden" name="authtoken" value="<%=info[0].password %>">
+        <form class="ppu" action="/upload" method="post" enctype="multipart/form-data">
+            <div class="mdc-button">
+                <span class="mdc-button__label logintext">Edit Profile Picture</span>
+            </div>
+            <input type="hidden" name="email" value="<%= info[0].email %>">
+            <input type="hidden" name="authtoken" value="<%= info[0].password %>">
             <div class="ip bm mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
                 <i class="ipfile file prime material-icons mdc-text-field__icon">image</i>
-                <input type="file" accept="image/*" name="photo" onchange="show()" id="dp" class="bod mdc-text-field__input" required>
+                <input type="file" accept="image/*" name="photo" onchange="show()" id="dp"
+                    class="bod mdc-text-field__input" required>
                 <div class="mdc-notched-outline">
                     <div class="mdc-notched-outline__leading"><span class="filename"></span>
                     </div>
@@ -103,11 +163,13 @@
                     <div class="mdc-notched-outline__trailing"></div>
                 </div>
             </div>
-            <button type="submit" id="update" class="updatepp padd mdc-button mdc-button--raised">
-                <div class="mdc-button__ripple"></div>
-                <i class="loader material-icons mdc-button__icon" aria-hidden="true">edit</i>
-                <span class="mdc-button__label cap">Update</span>
-            </button>
+            <div class="oneline">
+                <button type="submit" id="update" class="updatepp padd mdc-button mdc-button--raised">
+                    <div class="mdc-button__ripple"></div>
+                    <i class="loader material-icons mdc-button__icon" aria-hidden="true">edit</i>
+                    <span class="mdc-button__label cap">Update</span>
+                </button>
+            </div>
         </form>
     </div>
 

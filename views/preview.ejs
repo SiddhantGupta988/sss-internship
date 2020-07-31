@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include("./partials/dashhead.ejs") %>
+    <link rel="stylesheet" href="/qs.css">
+</head>
+
+<body>
+    <%-include("./partials/dashnav.ejs") %>
+    <% var i=1%>
+    <div class="preview form mdc-elevation--z5">
+        <% qs.forEach((q)=>{%>
+        <div class="questions">
+            <b><%=i+". "+q.qs %></b>
+            <% var opts=q.opts.split('$') %>
+            <%opts.forEach((opt) => { %>
+            <p class="paddl">
+                <label>
+                    <input name="<%=i%>" type="radio" value="<%=opt %>" />
+                    <span><%=opt %></span>
+                </label>
+            </p>
+            <%}); %>
+            <a id="edit" onclick="this.href=link(<%=q.slno%>)" class="mdc-button"><span
+                    class="material-icons">
+                    edit
+                </span>Edit</a>
+            <button id="del" style="background-color: red;color: white;" onclick="event.preventDefault(),deleteqs(<%=q.slno%>)" class="mdc-button"><span
+                    class="material-icons">
+                    delete
+                </span>Delete</button>
+
+        </div>
+        <% i++;  %>
+        <% }) %>
+
+    </div>
+    <a href="" onclick="this.href=linktoaddqs()" class="qs padd mdc-button mdc-button--raised">
+        <div class="mdc-button__ripple"></div>
+        <i class="loader material-icons mdc-button__icon" aria-hidden="true">edit</i>
+        <span class="mdc-button__label cap">Add Questions</span>
+    </a>
+</body>
+<script src="/qs.js"></script>
+<script>
+function link(slno) {
+    const params = new URLSearchParams(document.location.search);
+    const e = params.get("email");
+    const a = params.get("authtoken");
+    return `/edit?email=${e}&authtoken=${a}&slno=${slno}`
+}
+    function linktoaddqs(){
+    const params = new URLSearchParams(document.location.search);
+const e = params.get("email");
+const a = params.get("authtoken");
+console.log(e)
+console.log(a)
+return `/questions?email=${e}&authtoken=${a}`
+}
+</script>
+</html>

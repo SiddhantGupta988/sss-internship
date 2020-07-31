@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("./partials/dashhead.ejs") %> 
+    <link rel="stylesheet" href="/qs.css">
+</head>
+<body onfocusout="hide()">  
+      <%- include("./partials/dashnav.ejs") %> 
+      <div class="main" >
+        <form class="form1" action="/addqs" method="POST">
+            <div class="mdc-button">
+                <span class="mdc-button__label logintext">Add Question</span>
+            </div>
+            <input name="email" type="hidden" value="<%=email %> ">
+            <input name="authtoken" type="hidden" value="<%=authtoken %> ">
+            <div class="ip mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+                <input name="qs" id="qs" type="text" class=" mdc-text-field__input" id="text-field-hero-input" required>
+                <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                        <label for="text-field-hero-input" class="mdc-floating-label">Question</label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
+                </div>
+            </div>
+            <div class="ip mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+                <input name="op1" id="op1" type="text" class=" mdc-text-field__input" id="text-field-hero-input" required>
+                <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                        <label for="text-field-hero-input" class="mdc-floating-label">Option 1</label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
+                </div>
+            </div>
+            <div class="ip mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+                <input name="op2" id="op2" type="text" class=" mdc-text-field__input" id="text-field-hero-input" required>
+                <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                        <label for="text-field-hero-input" class="mdc-floating-label">Option 2</label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
+                </div>
+            </div>
+            <div class="ip mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+                <input name="op3" id="op3" type="text" class=" mdc-text-field__input"
+                    id="text-field-hero-input" required>
+                <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                        <label for="text-field-hero-input" class="mdc-floating-label">option 3</label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
+                </div>
+            </div>
+            <div class="ip mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+                <input name="op4" id="op4" type="text" class=" mdc-text-field__input"
+                    id="text-field-hero-input" required>
+                <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                        <label for="text-field-hero-input" class="mdc-floating-label">option 4</label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
+                </div>
+            </div>
+            <div class="ip mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+                <input name="ans" id="ans" type="text" class=" mdc-text-field__input"
+                    id="text-field-hero-input" required>
+                <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                        <label for="text-field-hero-input" class="mdc-floating-label">Correct Answer</label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
+                </div>
+            </div>
+            <div class="oneline">
+                <button type="submit" class="submit padd mdc-button mdc-button--raised">
+                    <div class="mdc-button__ripple"></div>
+                    <i class="loader material-icons mdc-button__icon" aria-hidden="true"></i>
+                    <span class="mdc-button__label cap">Add question</span>
+                </button>
+                <a href="" onclick="this.href=link()" class=" padd mdc-button mdc-button--raised">
+                    <div class="mdc-button__ripple"></div>
+                    <i class="loader material-icons mdc-button__icon" aria-hidden="true"></i>
+                    <span class="mdc-button__label cap">Complete</span>
+                </a>
+            </div>
+
+        </form>
+    </div>
+</body>
+<script src="/qs.js"></script>
+</html>

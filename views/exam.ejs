@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include("./partials/dashhead.ejs") %>
+    <link rel="stylesheet" href="/qs.css">
+</head>
+
+<body>
+    <div class="conf alert-bg">
+        <div class="confirmation mdc-elevation--z5">
+            <p class="danger">>Inorder to continue this page will load in fullscreen.<br>
+                >Switching between tabs is not allowed if done, u will be disqualified.</p>
+            <div class="action"><a href="" onclick="this.href=link()"
+                    class="mdc-button mdc-button--outlined">Cancel</a><button class="mdc-button mdc-button--outlined"
+                    onclick="openFullscreen(),fullscreen()">Ok</button></div>
+        </div>
+    </div>
+    <div class="alert1 alert-bg">
+        <div class="msg mdc-elevation--z5">
+            <p class="alert-msg"></p>
+            <div class="action"><button class="mdc-button mdc-button--outlined" onclick="hide()">Ok</button></div>
+        </div>
+    </div>
+    <% var i=1%>
+    <input id="end" type="hidden" value="<%=exam[0].noh%>">
+    <div class="wrap">
+        <p id="counter"></p>
+    </div>
+    <form action="/submit" method="POST" class="preview form mdc-elevation--z5">
+        <input type="hidden" name="email" value="<%= info[0].email %>">
+        <input type="hidden" name="authtoken" value="<%= info[0].password %>">
+        <% qs.forEach((q)=>{if(i==(qs.length) & qs.length==1){%>
+        <div id="qs<%=i %>" class="questions">
+            <b><%=i+". "+q.qs %></b>
+            <% var opts=q.opts.split('$') %>
+            <%opts.forEach((opt) => { %>
+            <p class="paddl">
+                <label>
+                    <input name="<%=i%>" type="radio" value="<%=opt %>" />
+                    <span><%=opt %></span>
+                </label>
+            </p>
+            <%}); %>
+            <div class="align-left">
+                <button class="mdc-button mdc-button--raised">
+                    <div class="mdc-button__ripple"></div>
+                    <i class="loader material-icons mdc-button__icon" aria-hidden="true">send</i>
+                    <span class="mdc-button__label cap">submit</span>
+                </button></div>
+            <% i++;  %>
+        </div>
+        <%}else if(i==(qs.length)){%>
+        <div id="qs<%=i %>" class="visuallyhidden">
+            <b><%=i+". "+q.qs %></b>
+            <% var opts=q.opts.split('$') %>
+            <%opts.forEach((opt) => { %>
+            <p class="paddl">
+                <label>
+                    <input name="<%=i%>" type="radio" value="<%=opt %>" />
+                    <span><%=opt %></span>
+                </label>
+            </p>
+            <%}); %>
+            <div class="align-left">
+                <button id="submit" class="mdc-button mdc-button--raised">
+                    <div class="mdc-button__ripple"></div>
+                    <i class="loader material-icons mdc-button__icon" aria-hidden="true">send</i>
+                    <span class="mdc-button__label cap">submit</span>
+                </button></div>
+            <% i++;  %>
+        </div>
+        <%}else if(i!=1){%>
+        <div id="qs<%=i %>" class="visuallyhidden">
+            <b><%=i+". "+q.qs %></b>
+            <% var opts=q.opts.split('$') %>
+            <% console.log(opts) %> 
+            <%opts.forEach((opt) => { %>
+            <p class="paddl">
+                <label>
+                    <input name="<%=i%>" type="radio" value="<%=opt %>" />
+                    <span><%=opt %></span>
+                </label>
+            </p>
+            <%}); %>
+            <% i++;  %>
+        </div>
+        <%}else{ %>
+        <div id="qs<%=i %>" class="pd questions">
+            <b><%=i+". "+q.qs %></b>
+            <% var opts=q.opts.split('$') %>
+            <%opts.forEach((opt) => { %>
+            <p class="paddl">
+                <label>
+                    <input name="<%=i%>" type="radio" value="<%=opt %>" />
+                    <span><%=opt %></span>
+                </label>
+            </p>
+            <%}); %>
+            <% i++;  %>
+        </div>
+        <%} }) %>
+        <!-- <div class="align-center">
+            <button class="mdc-button mdc-button--raised">
+                <div class="mdc-button__ripple"></div>
+                <i class="loader material-icons mdc-button__icon" aria-hidden="true">send</i>
+                <span class="mdc-button__label cap">submit</span>
+            </button>
+        </div> -->
+
+    </form>
+    <div class="pagination">
+        <%for(var j=1;j<qs.length+1;j++){%>
+        <% if(j!=1){  %>
+        <button id="q<%=j%>" onclick="page(this.id,<%=qs.length%>)" class="waves-effect mdc-elevation--z5"><%=j%></button>
+        <% }else{ %>
+        <button id="q<%=j%>" onclick="page(this.id,<%=qs.length%>)" class="active waves-effect mdc-elevation--z5"><%=j%></button>
+        <%}}%></div>
+
+    <div class="align-center">
+        <a href="" onclick="this.href=link()" style="margin-left:1vw;color:white; background-color: red;"
+            class="mdc-button mdc-button--outlined">End Exam</a>
+    </div>
+
+</body>
+<script src="/qs1.js"></script>
+
+</html>
