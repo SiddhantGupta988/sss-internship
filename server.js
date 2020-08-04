@@ -13,7 +13,7 @@ let mailTransporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: 'osesvit2021@gmail.com',
-        pass: 'OSE2021SVIT'
+        pass: '9901735897'
     }
 });
 var con = mysql.createConnection({
