@@ -17,10 +17,10 @@ let mailTransporter = nodemailer.createTransport({
     }
 });
 var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "testnodejs",
+    host: "sql10.freesqldatabase.com",
+    user: "sql10358571",
+    password: "9JqVMLNM21",
+    database: "sql10358571",
 });
 
 con.connect(function (err) {

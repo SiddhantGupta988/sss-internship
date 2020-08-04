@@ -4,6 +4,12 @@
 <head>
     <%- include("./partials/dashhead.ejs") %>
     <link rel="stylesheet" href="/qs.css">
+    <style>
+    .questions{
+        height: auto !important;
+        padding-top: 2vw;
+    }
+    </style>
 </head>
 
 <body>
@@ -22,6 +28,8 @@
                 </label>
             </p>
             <%}); %>
+
+            <div class="Answer"><b>Answer:</b> <%=q.ans%></div><br>
             <a id="edit" onclick="this.href=link(<%=q.slno%>)" class="mdc-button"><span
                     class="material-icons">
                     edit
