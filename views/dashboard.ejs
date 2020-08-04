@@ -63,7 +63,7 @@
                         ,<%= localtime(examinfo[0].starttime) %>
                         to <%= examinfo[0].enddate %> ,<%= localtime(examinfo[0].endtime) %>.
                     </li>
-                    <li></li>
+                    <li>You can take exam only once.</li>
                 </ol>
             </div>
             <button onclick="window.open('/exam?email=<%=info[0].email%>&authtoken=<%=info[0].password%>')"
